@@ -11,21 +11,21 @@ pipeline {
 
         stage('Test Docker') {
             steps {
-                sh 'docker version'
+                bat 'docker version'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t flask-cicd .'
+                bat 'docker build -t flask-cicd .'
             }
         }
 
         stage('Run Container') {
             steps {
-                sh 'docker stop flask-app || true'
-                sh 'docker rm flask-app || true'
-                sh 'docker run -d -p 5000:5000 --name flask-app flask-cicd'
+                bat 'docker stop flask-app || exit 0'
+                bat 'docker rm flask-app || exit 0'
+                bat 'docker run -d -p 5000:5000 --name flask-app flask-cicd'
             }
         }
     }
